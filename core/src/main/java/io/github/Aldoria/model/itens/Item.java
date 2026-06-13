@@ -2,22 +2,19 @@ package io.github.Aldoria.model.itens;
 
 public abstract class Item {
 
-    public enum TipoItem {COMSUMIVEL, ARMA}
+    protected String nome;
+    protected String descricao;
 
-    private final String nome;
-    private final String descricao;
-    private final TipoItem tipo;
-
-    public Item(String nome, String descricao, TipoItem tipo) {
+    public Item(String nome, String descricao) {
         this.nome = nome;
         this.descricao = descricao;
-        this.tipo = tipo;
     }
 
-    public String getNome() {return nome;}
-    public String getDescricao() {return descricao;}
-    public TipoItem getTipo() {return tipo;}
+    public String getNome() {
+        return nome;
+    }
 
-    @Override
-    public String toString(){return nome;}
+    public String getDescricao() {
+        return descricao;
+    }
 }

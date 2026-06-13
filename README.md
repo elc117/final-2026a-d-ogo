@@ -1,1 +1,6 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/8MfjtJ-y)
+comecei gerando a arquitetura de pastas e fazendo o GDD 
+comecei a implementar a logica de personagem 
+
+se deus é por nos o java é contra, to enfrentando erros de BIOS(bicho ignorante operando o sistema)
+
+revis varios codigos q seram mandados com comits tecnicos um por um mas nossa esta bem complexo, as IA tao mais atrapalhando que ajudando 

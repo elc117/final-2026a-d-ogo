@@ -1,0 +1,8 @@
+apply plugin: "java-library"
+
+dependencies {
+  api "com.badlogicgames.gdx:gdx:$gdxVersion"
+  implementation project(":shared")
+}
+
+eclipse.project.name = appName + "-core"

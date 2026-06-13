@@ -1,0 +1,78 @@
+buildscript {
+  repositories {
+    mavenCentral()
+    google()
+    gradlePluginPortal()
+  }
+}
+
+allprojects {
+  apply plugin: "idea"
+  apply plugin: "eclipse"
+
+  ext {
+    appName = "RPG-game"
+    gdxVersion = "1.12.1"
+    graalHelperVersion = "2.0.1"
+  }
+
+  repositories {
+    mavenCentral()
+    google()
+  }
+}
+
+subprojects {
+  apply plugin: "java-library"
+
+  sourceCompatibility = 11
+  targetCompatibility = 11
+
+  tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8"
+  }
+}
+
+project(":core") {
+  dependencies {
+    implementation project(":shared")
+    api "com.badlogicgames.gdx:gdx:$gdxVersion"
+  }
+}
+
+project(":shared") {
+  dependencies {
+    api "com.badlogicgames.gdx:gdx:$gdxVersion"
+  }
+}
+
+project(":lwjgl3") {
+  dependencies {
+    implementation project(":core")
+    implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+    implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+  }
+}
+
+project(":html") {
+  apply plugin: "war"
+  apply plugin: "gwt"
+
+  dependencies {
+    implementation project(":core")
+    implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
+    implementation "com.badlogicgames.gdx:gdx:gwt:$gdxVersion"
+  }
+}
+
+project(":server") {
+  dependencies {
+    implementation project(":core")
+  }
+}
+
+project(":teavm") {
+  dependencies {
+    implementation project(":core")
+  }
+}

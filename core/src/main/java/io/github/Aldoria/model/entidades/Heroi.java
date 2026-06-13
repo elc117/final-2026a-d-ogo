@@ -1,46 +1,60 @@
 package io.github.Aldoria.model.entidades;
 
-public class heroi extends Personagem {
-    public enum ClaseHeroi {GUERREIRO, MAGO, LADRAO, CLERIGO}
+import io.github.Aldoria.model.itens.ItemArma;
 
-    public final ClaseHeroi claseHeroi;
-    private int ataqueBonusTurno = 0;
-    private float multiplicadorBonusAtaque = 1f;
+import java.util.ArrayList;
+import java.util.List;
 
-    public heroi(String nome, ClaseHeroi claseHeroi, int vidaMax, int manaMax, int ataque, int defesa, int velocidade,) {
-        super(nome, vidaMax, manaMax, ataque, defesa, velocidade);
-        this.claseHeroi = claseHeroi;
+public class Heroi {
+
+    private String nome;
+    private int hp = 100;
+
+    private int defesa = 10;
+    private int velocidade = 10;
+
+    private ItemArma armaEquipada;
+
+    private List<String> skills = new ArrayList<>();
+
+    public Heroi(String nome) {
+        this.nome = nome;
+        skills.add("Ataque Básico");
     }
 
-    public void aplicarBonusAtaque(float multiplicadorBonusAtaque, int turnos) {
-        this.multiplicadorBonusAtaque = multiplicadorBonusAtaque;
-        this.ataqueBonusTurno = turnos;
+    public String getNome() {
+        return nome;
     }
 
-    public void buffs(){
-        if (ataqueBonusTurno > 0){
-            ataqueBonusTurno--;
-            if (ataqueBonusTurno == 0) multiplicadorBonusAtaque = 1f;
-        }
+    public int getHpAtual() {
+        return hp;
     }
 
-    @Override
-    public int getAtaqueCritico() {
-        return (int)(super.getAtaqueCritico() * multiplicadorBonusAtaque);
+    public int getHpMaximo() {
+        return 100;
     }
 
-    public ClaseHeroi getClaseHeroi() {
-        return claseHeroi;
+    public int getDefesa() {
+        return defesa;
     }
 
-    public int getAtaqueBonusTurno() {return ataqueBonusTurno;}
+    public int getVelocidade() {
+        return velocidade;
+    }
 
-    public static Heroi[] criarEquipe() {
-        Heroi kael   = new Heroi("Kael",   claseHeroi.WARRIOR, 180, 40, 55, 30, 20);
-        Heroi lirien = new Heroi("Lirien", claseHeroi.MAGE,     90, 120, 25, 15, 25);
-        Heroi thorn  = new Heroi("Thorn",  claseHeroi.ROGUE,   110, 70, 45, 20, 35);
-        Heroi sera   = new Heroi("Sera",   claseHeroi.HEALER,  120, 110, 20, 25, 22);
-        return new Heroi[]{kael, lirien, thorn, sera};
+    public boolean estaVivo() {
+        return hp > 0;
+    }
 
+    public ItemArma getArmaEquipada() {
+        return armaEquipada;
+    }
+
+    public void equipar(ItemArma arma) {
+        this.armaEquipada = arma;
+    }
+
+    public List<String> getSkills() {
+        return skills;
     }
 }

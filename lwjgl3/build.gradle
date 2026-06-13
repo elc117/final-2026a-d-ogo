@@ -1,0 +1,30 @@
+plugins {
+  id "application"
+}
+
+application {
+  mainClass = "io.github.Aldoria.lwjgl3.Lwjgl3Launcher"
+}
+
+sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
+
+dependencies {
+  implementation project(":core")
+
+  implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+  implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(11)
+  }
+}
+
+tasks.withType(JavaCompile).configureEach {
+  options.encoding = "UTF-8"
+}
+
+run {
+  workingDir = rootProject.file("assets")
+}

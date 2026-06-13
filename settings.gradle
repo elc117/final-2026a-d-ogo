@@ -1,0 +1,6 @@
+rootProject.name = "final-2026a-d-ogo"
+
+include 'core', 'lwjgl3', 'shared', 'server', 'teavm'
+rootProject.name = "final-2026a-d-ogo"
+
+include 'core', 'lwjgl3', 'shared', 'server', 'teavm'

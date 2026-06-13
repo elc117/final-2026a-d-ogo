@@ -1,40 +1,25 @@
 package io.github.Aldoria;
 
-import io.github.Aldoria.controle.ControleBatalha;
-import io.github.Aldoria.controle.controleInimigo;
-import io.github.Aldoria.controle.controleInventario;
-import io.github.Aldoria.controle.controleGrupo;
-import io.github.Aldoria.model.world.GameMap;
+import io.github.Aldoria.model.entidades.Heroi;
+import io.github.Aldoria.model.entidades.Inimigo;
+import io.github.Aldoria.model.itens.Item;
+import io.github.Aldoria.model.mundo.MapaJogo;
 
-/**
- * Contexto global do jogo — único ponto de acesso aos managers.
- * Inicializado em {@link Main} e passado às screens.
- */
+import java.util.ArrayList;
+import java.util.List;
 
-public class gameContext {
+public class GameContext {
 
-    public final controleGrupo grupo;
-    public final controleInventario inventario;
-    public final controleBatalha batalha;
-    public final controleInimigoSpawner spawner;
+    public List<Heroi> grupo = new ArrayList<>();
+    public List<Item> inventario = new ArrayList<>();
+    public List<Inimigo> inimigos = new ArrayList<>();
+
+    public MapaJogo mapaAtual = new MapaJogo();
+
+    public int linhaJogador = 5;
+    public int colunaJogador = 5;
 
     public GameContext() {
-        grupo = new controleGrupo();
-        inventario = new controleInventario();
-        batalha = new controleBatalha(grupo, inventario);
-        spawner = new inimigoSpawner();
-        carregarMapa(0);
-    }
-
-    public void carregarMapa(int index){
-        currentMapIndex = index;
-        currentMap = switch (index) {
-            case 1 -> GameMap.criarMapa2();
-            case 2 -> GameMap.criarMapa3();
-            default -> GameMap.criarMapa1();
-        };
-        jogadorCol = currentMap.getStartX();
-        jogadorLin = currentMap.getStartY();
-        spawner.initFinalBoss(); //reinicia as fases do chefe ao mudar o mapa
+        grupo.add(new Heroi("Herói"));
     }
 }

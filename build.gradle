@@ -1,0 +1,38 @@
+buildscript {
+  repositories {
+    mavenCentral()
+    google()
+    gradlePluginPortal()
+  }
+}
+
+allprojects {
+  apply plugin: "idea"
+  apply plugin: "eclipse"
+
+  ext {
+    appName = "RPG-game"
+    gdxVersion = "1.12.1"
+    graalHelperVersion = "2.0.1"
+  }
+
+  repositories {
+    mavenCentral()
+    google()
+    maven { url "https://jitpack.io" }
+  }
+}
+
+subprojects {
+  apply plugin: "java-library"
+
+  java {
+    toolchain {
+      languageVersion = JavaLanguageVersion.of(11)
+    }
+  }
+
+  tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8"
+  }
+}
