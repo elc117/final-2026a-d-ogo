@@ -1,6 +1,47 @@
-comecei gerando a arquitetura de pastas e fazendo o GDD 
-comecei a implementar a logica de personagem 
+## INICIAL 
+-> comecei gerando as classes iniciais de entidade, tudo isso dentro dos models do projeto 
 
-se deus é por nos o java é contra, to enfrentando erros de BIOS(bicho ignorante operando o sistema)
+-> na classe *HEROI* e na classe *PERSONAGEM* eu defini a base de codigo e clean code que segui no projeto 
 
-revis varios codigos q seram mandados com comits tecnicos um por um mas nossa esta bem complexo, as IA tao mais atrapalhando que ajudando 
+### LOGICAS DE MUNDO 
+
+-> configurei a ideia de inimigo e do mapa aonde inicialmente ele tem um grid em forma de matriz 2X2 que sera substituido
+pelo mapa final 
+
+
+-> com base neste grid os enimigos sao gerados randomicamente, são iniciados com vidas e ataques randomicos
+
+-> sao gerados inicialmente 3 inimigos mais fracos e depois é gerado um inimigo mias forte (boss)
+
+-> todos inimigos dropan loot para o gerenciameto de grupo 
+
+-> a logica de itens, ataques e skills estao implementada, so esta faltando a config deimagens e refnamento de tela 
+# PROCESSO DE DESENVOLVIMENTO 
+
+comecei pela logica geral aonde defini como ia funcionar os personagens, depois o mapa e as telas,
+as telas sao geradas em dois momentos
+
+# DIFICULDADES
+-> uma coisa que me fez quase perder o cabelo pensando foi que ospersonagesso faziam uma luta e depois nao entravam na tela, achei que era bug vizual e fui tentar resolver 
+no final descobri q os personagens estavam mortos 
+poe isso agora existe a barra visual de vida 
+## TELA MAPA 
+![tela_mapa](./core/img/grid.png)
+
+aonde o personagem (circulo amarelo)  ira andar pelo senario ate aleatoriamente achar um enimigo 
+
+
+## TELA BATALHA 
+
+![tela batalha](./core/img/tela_batalha_inimigo.png)
+
+tela de batalha oande pode ser escolhido qual persnage atacar e qual tipo de golpe ou skill usar, tambem serve como gerenciamento de itens 
+
+tambem pode se ver nesta tela que o inimigo ataca os personagens podendo matar eles 
+
+![imagem batalha final ini](./core/img/inimigo_final_heroi_morto.png)
+
+o personagem vermelho esta morto 
+
+
+
