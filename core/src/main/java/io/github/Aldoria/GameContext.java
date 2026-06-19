@@ -10,16 +10,47 @@ import java.util.List;
 
 public class GameContext {
 
-    public List<Heroi> grupo = new ArrayList<>();
-    public List<Item> inventario = new ArrayList<>();
-    public List<Inimigo> inimigos = new ArrayList<>();
+    public List<Heroi> grupo;
+    public List<Item> inventario;
+    public List<Inimigo> inimigos;
 
-    public MapaJogo mapaAtual = new MapaJogo();
+    public MapaJogo mapaAtual;
 
-    public int linhaJogador = 5;
-    public int colunaJogador = 5;
+    public int linhaJogador;
+    public int colunaJogador;
+    public int inimigosDerrotados = 0;
 
     public GameContext() {
-        grupo.add(new Heroi("Herói"));
+
+        grupo = new ArrayList<>();
+        inventario = new ArrayList<>();
+        inimigos = new ArrayList<>();
+
+        mapaAtual = new MapaJogo();
+
+        linhaJogador = 5;
+        colunaJogador = 5;
+
+        inicializarGrupo();
+    }
+
+    private void inicializarGrupo() {
+
+        grupo.add(new Heroi("Guerreiro"));
+        grupo.add(new Heroi("Ladino"));
+        grupo.add(new Heroi("Mago"));
+        grupo.add(new Heroi("Clerigo"));
+    }
+
+    public Heroi getHeroiPrincipal() {
+        return grupo.get(0);
+    }
+
+    public List<Heroi> getGrupo() {
+        return grupo;
+    }
+
+    public List<Inimigo> getInimigos() {
+        return inimigos;
     }
 }

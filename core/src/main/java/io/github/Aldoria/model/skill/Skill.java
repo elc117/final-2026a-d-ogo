@@ -6,7 +6,11 @@ public class Skill {
     private int custoMp;
     private int valor;
 
-    public Skill(String nome, int custoMp, int valor) {
+    public Skill(
+        String nome,
+        int custoMp,
+        int valor
+    ) {
         this.nome = nome;
         this.custoMp = custoMp;
         this.valor = valor;
@@ -24,27 +28,108 @@ public class Skill {
         return valor;
     }
 
-    public static Skill gritoGuerra() {
-        return new Skill("Grito de Guerra", 5, 10);
+    /*
+     * GUERREIRO
+     */
+
+    public static Skill golpePesado() {
+        return new Skill(
+            "Golpe Pesado",
+            0,
+            35
+        );
     }
 
+    public static Skill gritoGuerra() {
+        return new Skill(
+            "Grito de Guerra",
+            5,
+            15
+        );
+    }
+
+    /*
+     * LADINO
+     */
+
+    public static Skill ataqueFurtivo() {
+        return new Skill(
+            "Ataque Furtivo",
+            0,
+            45
+        );
+    }
+
+    public static Skill golpeVenenoso() {
+        return new Skill(
+            "Golpe Venenoso",
+            5,
+            30
+        );
+    }
+
+    /*
+     * MAGO
+     */
+
     public static Skill bolaFogo() {
-        return new Skill("Bola de Fogo", 8, 25);
+        return new Skill(
+            "Bola de Fogo",
+            15,
+            40
+        );
     }
 
     public static Skill nevasca() {
-        return new Skill("Nevasca", 10, 30);
+        return new Skill(
+            "Nevasca",
+            20,
+            55
+        );
     }
 
-    public static Skill tiroSombrio() {
-        return new Skill("Tiro Sombrio", 6, 20);
+    public static Skill meteoro() {
+        return new Skill(
+            "Meteoro",
+            40,
+            100
+        );
     }
+
+    /*
+     * CLERIGO
+     * valores negativos = cura
+     */
 
     public static Skill cura() {
-        return new Skill("Cura", 5, -30);
+        return new Skill(
+            "Cura",
+            10,
+            -30
+        );
+    }
+
+    public static Skill curaMaior() {
+        return new Skill(
+            "Cura Maior",
+            20,
+            -60
+        );
+    }
+
+    public static Skill milagre() {
+        return new Skill(
+            "Milagre",
+            40,
+            -120
+        );
     }
 
     public static Skill reviverLuz() {
-        return new Skill("Reviver Luz", 15, 0);
+        return new Skill(
+            "Reviver Luz",
+            50,
+            -999
+        );
     }
 }

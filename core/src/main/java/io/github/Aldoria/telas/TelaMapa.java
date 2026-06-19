@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import io.github.Aldoria.GameContext;
 import io.github.Aldoria.Main;
+import io.github.Aldoria.model.entidades.Inimigo;
+import io.github.Aldoria.controle.ControleSpawnerInimigo;
 
 public class TelaMapa implements Screen {
 
@@ -24,10 +26,13 @@ public class TelaMapa implements Screen {
     private SpriteBatch batch;
     private BitmapFont font;
     private ShapeRenderer renderer;
+    private final ControleSpawnerInimigo spawner;
 
     public TelaMapa(Main jogo, GameContext contexto) {
         this.jogo = jogo;
         this.contexto = contexto;
+
+        this.spawner = new  ControleSpawnerInimigo();
     }
 
     @Override
@@ -112,8 +117,33 @@ public class TelaMapa implements Screen {
 
         if (chance < 0.10f) {
 
+            System.out.println("Encontro aleatório!");
+
+            contexto.inimigos.clear();
+
+            Inimigo inimigo =
+                spawner.gerarInimigo(
+                    contexto.inimigosDerrotados
+                );
+
             System.out.println(
-                "Encontro aleatório!"
+                "Spawnou: "
+                    + inimigo.getNome()
+                    + " HP="
+                    + inimigo.getHpAtual()
+                    + " ATK="
+                    + inimigo.getAtaque()
+            );
+
+            contexto.inimigos.add(inimigo);
+
+            System.out.println(
+                "Spawnou: "
+                    + inimigo.getNome()
+                    + " HP="
+                    + inimigo.getHpAtual()
+                    + " ATK="
+                    + inimigo.getAtaque()
             );
 
             jogo.setScreen(
