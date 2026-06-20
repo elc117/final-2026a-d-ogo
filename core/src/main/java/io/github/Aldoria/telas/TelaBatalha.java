@@ -188,8 +188,7 @@ public class TelaBatalha implements Screen {
 
     private void processarEntrada() {
 
-        if (escolhendoAlvoCura ||
-            escolhendoAlvoReviver) {
+        if (escolhendoAlvoCura) {
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
 
@@ -210,6 +209,16 @@ public class TelaBatalha implements Screen {
 
                     alvoSelecionado = 0;
                 }
+            }
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+
+                usarCuraClerigo();
+            }
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+
+                escolhendoAlvoCura = false;
             }
 
             return;
@@ -447,46 +456,15 @@ public class TelaBatalha implements Screen {
 
                 if (heroi.getNome().equalsIgnoreCase("Clerigo")) {
 
-                    if (!heroi.usarCargaDivina()) {
+                    escolhendoAlvoCura = true;
 
-                        mensagem =
-                            "Sem cargas divinas!";
+                    alvoSelecionado = 0;
 
-                        break;
-                    }
-
-                    Heroi alvo =
-                        contexto.grupo.get(alvoSelecionado);
-
-                    if (!alvo.estaVivo()) {
-
-                        alvo.reviver();
-
-                        mensagem =
-                            alvo.getNome()
-                                + " foi revivido!";
-
-                    } else {
-
-                        alvo.curar(80);
-
-                        mensagem =
-                            alvo.getNome()
-                                + " recuperou 80 HP!";
-                    }
-
-                    if (hpInimigo > 0) {
-                        turnoInimigo();
-                    }
+                    mensagem =
+                        "Escolha quem curar";
 
                     break;
                 }
-
-                mensagem =
-                    heroi.getNome()
-                        + " nao possui skill.";
-
-                break;
 
             case 2:
 
@@ -545,8 +523,13 @@ public class TelaBatalha implements Screen {
                     Color.RED
                 );
 
-            } else if (i == heroiSelecionado) {
+            } else if (escolhendoAlvoCura && i == alvoSelecionado) {
 
+                renderer.setColor(
+                    Color.CYAN
+                );
+
+            } else if (i == heroiSelecionado) {
                 renderer.setColor(
                     Color.GOLD
                 );
@@ -787,6 +770,36 @@ public class TelaBatalha implements Screen {
                 );
             }
         }
+        if (escolhendoAlvoCura) {
+
+            font.draw(
+                batch,
+                "Escolha quem curar",
+                300,
+                160
+            );
+
+            for (int i = 0;
+                 i < contexto.grupo.size();
+                 i++) {
+
+                String texto =
+                    (i == alvoSelecionado
+                        ? "> "
+                        : "  ")
+                        +
+                        contexto.grupo
+                            .get(i)
+                            .getNome();
+
+                font.draw(
+                    batch,
+                    texto,
+                    300,
+                    130 - (i * 30)
+                );
+            }
+        }
 
         batch.end();
     }
@@ -906,6 +919,44 @@ public class TelaBatalha implements Screen {
 
         if (font != null) {
             font.dispose();
+        }
+    }
+
+    private void usarCuraClerigo() {
+
+        Heroi clerigo =
+            contexto.grupo.get(
+                heroiSelecionado
+            );
+
+        if (!clerigo.usarCargaDivina()) {
+
+            mensagem =
+                "Sem cargas divinas!";
+
+            escolhendoAlvoCura = false;
+
+            return;
+        }
+
+        Heroi alvo =
+            contexto.grupo.get(
+                alvoSelecionado
+            );
+
+        alvo.curar(80);
+
+        mensagem =
+            clerigo.getNome()
+                + " curou "
+                + alvo.getNome()
+                + " em 80 HP";
+
+        escolhendoAlvoCura = false;
+
+        if (hpInimigo > 0) {
+
+            turnoInimigo();
         }
     }
 
