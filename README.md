@@ -44,4 +44,27 @@ tambem pode se ver nesta tela que o inimigo ataca os personagens podendo matar e
 o personagem vermelho esta morto 
 
 
+como atualização do projeto caminhando para a parte final de ajustes de imagem foi arrumado as separações de telas e sprit 
+aonde a tela batalha acabou ficando bem hard-code, sinto que poderia ter melhorado a modularização, tentarei fazer isso durante estes dias finais
+tambem adicionei imagens e sprits ao jogo, itoisso ODEIO QUEM DEIXA PNG FALSO NA INTERNET
+
+![image pngfalso](./core/img/pngfalso.png)
+
+consegui remover o fundo das imagens com ajuda da ferramenta de IA do canvas, e os pngs foram gerados pelo gemini 
+levando em conta que tenho zero habilidades artisticas, os backgrounds foram pegos nos assets gratis da plataforma itchi.io 
+
+## imagens do jogo quase finalizado 
+
+### Batalha
+![fundo](./core/img/batalha.png)
+
+ainda existe outros inimigos mas morri antes de chegar neles, pelo visto não sou bom joando meu proprio jogo
+
+### Mapa
+![mapa](./core/img/mapa_img.png)
+
+
+
+
+
 
