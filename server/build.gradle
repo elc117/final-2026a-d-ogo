@@ -1,10 +1,10 @@
 apply plugin: 'application'
 
 
-java.sourceCompatibility = 21
-java.targetCompatibility = 21
+java.sourceCompatibility = 17
+java.targetCompatibility = 17
 if (JavaVersion.current().isJava9Compatible()) {
-        compileJava.options.release.set(21)
+        compileJava.options.release.set(17)
 }
 
 application.mainClass = 'io.github.some_example_name.server.ServerLauncher'

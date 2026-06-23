@@ -2,8 +2,7 @@ package io.github.some_example_name.teavm;
 
 import com.github.xpenatan.gdx.teavm.backends.web.WebApplicationConfiguration;
 import com.github.xpenatan.gdx.teavm.backends.web.WebApplication;
-import io.github.some_example_name.Main;
-
+import io.github.Aldoria.Main;
 /**
  * Launches the TeaVM/HTML application.
  */

@@ -5,14 +5,15 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import io.github.Aldoria.GameContext;
 import io.github.Aldoria.Main;
-import io.github.Aldoria.model.entidades.Inimigo;
 import io.github.Aldoria.controle.ControleSpawnerInimigo;
+import io.github.Aldoria.model.entidades.Inimigo;
 
 public class TelaMapa implements Screen {
 
@@ -26,23 +27,37 @@ public class TelaMapa implements Screen {
     private SpriteBatch batch;
     private BitmapFont font;
     private ShapeRenderer renderer;
+
+    private Texture mapa;
+
     private final ControleSpawnerInimigo spawner;
 
-    public TelaMapa(Main jogo, GameContext contexto) {
+    public TelaMapa(
+        Main jogo,
+        GameContext contexto
+    ) {
+
         this.jogo = jogo;
         this.contexto = contexto;
 
-        this.spawner = new  ControleSpawnerInimigo();
+        this.spawner =
+            new ControleSpawnerInimigo();
     }
 
     @Override
     public void show() {
 
         batch = new SpriteBatch();
-        font = new BitmapFont();
-        renderer = new ShapeRenderer();
 
-        System.out.println("Mapa carregado");
+        font = new BitmapFont();
+
+        font.getData().setScale(1.2f);
+
+        renderer =
+            new ShapeRenderer();
+
+        mapa =
+            new Texture("mapa.png");
     }
 
     @Override
@@ -51,161 +66,103 @@ public class TelaMapa implements Screen {
         processarMovimento();
 
         Gdx.gl.glClearColor(
-            0.1f,
-            0.2f,
-            0.1f,
+            0f,
+            0f,
+            0f,
             1f
         );
 
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        desenharGrid();
-        desenharJogador();
-        desenharHud();
-    }
-
-    private void processarMovimento() {
-
-        boolean moveu = false;
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-            contexto.linhaJogador++;
-            moveu = true;
-        }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
-            contexto.linhaJogador--;
-            moveu = true;
-        }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-            contexto.colunaJogador--;
-            moveu = true;
-        }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
-            contexto.colunaJogador++;
-            moveu = true;
-        }
-
-        contexto.linhaJogador =
-            Math.max(
-                0,
-                Math.min(
-                    MAP_HEIGHT - 1,
-                    contexto.linhaJogador
-                )
-            );
-
-        contexto.colunaJogador =
-            Math.max(
-                0,
-                Math.min(
-                    MAP_WIDTH - 1,
-                    contexto.colunaJogador
-                )
-            );
-
-        if (moveu) {
-            verificarEncontroAleatorio();
-        }
-    }
-
-    private void verificarEncontroAleatorio() {
-
-        float chance = (float) Math.random();
-
-        if (chance < 0.10f) {
-
-            System.out.println("Encontro aleatório!");
-
-            contexto.inimigos.clear();
-
-            Inimigo inimigo =
-                spawner.gerarInimigo(
-                    contexto.inimigosDerrotados
-                );
-
-            System.out.println(
-                "Spawnou: "
-                    + inimigo.getNome()
-                    + " HP="
-                    + inimigo.getHpAtual()
-                    + " ATK="
-                    + inimigo.getAtaque()
-            );
-
-            contexto.inimigos.add(inimigo);
-
-            System.out.println(
-                "Spawnou: "
-                    + inimigo.getNome()
-                    + " HP="
-                    + inimigo.getHpAtual()
-                    + " ATK="
-                    + inimigo.getAtaque()
-            );
-
-            jogo.setScreen(
-                new TelaBatalha(
-                    jogo,
-                    contexto,
-                    this,
-                    false
-                )
-            );
-        }
-    }
-
-    private void desenharGrid() {
-
-        renderer.begin(
-            ShapeRenderer.ShapeType.Line
+        Gdx.gl.glClear(
+            GL20.GL_COLOR_BUFFER_BIT
         );
 
-        renderer.setColor(Color.DARK_GRAY);
+        batch.begin();
 
-        for (int x = 0; x <= MAP_WIDTH; x++) {
+        batch.draw(
 
-            renderer.line(
-                x * TILE_SIZE,
-                0,
-                x * TILE_SIZE,
-                MAP_HEIGHT * TILE_SIZE
-            );
-        }
+            mapa,
 
-        for (int y = 0; y <= MAP_HEIGHT; y++) {
+            0,
 
-            renderer.line(
-                0,
-                y * TILE_SIZE,
-                MAP_WIDTH * TILE_SIZE,
-                y * TILE_SIZE
-            );
-        }
+            0,
 
-        renderer.end();
+            Gdx.graphics.getWidth(),
+
+            Gdx.graphics.getHeight()
+
+        );
+
+        batch.end();
+
+        desenharJogador();
+
+        desenharHud();
     }
 
     private void desenharJogador() {
 
+        float x =
+
+            contexto.colunaJogador *
+
+                TILE_SIZE +
+
+                TILE_SIZE / 2f;
+
+        float y =
+
+            contexto.linhaJogador *
+
+                TILE_SIZE +
+
+                TILE_SIZE / 2f;
+
         renderer.begin(
+
             ShapeRenderer.ShapeType.Filled
+
         );
 
-        renderer.setColor(Color.YELLOW);
+        renderer.setColor(
+
+            Color.YELLOW
+
+        );
 
         renderer.circle(
-            contexto.colunaJogador * TILE_SIZE + TILE_SIZE / 2f,
-            contexto.linhaJogador * TILE_SIZE + TILE_SIZE / 2f,
+
+            x,
+
+            y,
+
             12
+
         );
 
         renderer.end();
     }
 
     private void desenharHud() {
+
+        renderer.begin(
+            ShapeRenderer.ShapeType.Filled
+        );
+
+        renderer.setColor(
+            0f,
+            0f,
+            0f,
+            0.70f
+        );
+
+        renderer.rect(
+            0,
+            Gdx.graphics.getHeight() - 180,
+            430,
+            180
+        );
+
+        renderer.end();
 
         batch.begin();
 
@@ -218,26 +175,38 @@ public class TelaMapa implements Screen {
 
         font.draw(
             batch,
-            "Heroi: " +
-                contexto.grupo.get(0).getNome(),
+            "Grupo: " + contexto.grupo.size(),
             20,
             Gdx.graphics.getHeight() - 50
         );
 
         font.draw(
             batch,
-            "Posicao: (" +
-                contexto.colunaJogador +
-                ", " +
-                contexto.linhaJogador +
-                ")",
+            "Derrotados: " + contexto.inimigosDerrotados,
             20,
             Gdx.graphics.getHeight() - 80
         );
 
         font.draw(
             batch,
-            "W A S D para mover",
+            "Inventario: " + contexto.inventario.size(),
+            20,
+            Gdx.graphics.getHeight() - 110
+        );
+
+        font.draw(
+            batch,
+            "Posicao: "
+                + contexto.colunaJogador
+                + ", "
+                + contexto.linhaJogador,
+            20,
+            Gdx.graphics.getHeight() - 140
+        );
+
+        font.draw(
+            batch,
+            "WASD=Mover  I=Inventario  G=Grupo  E=Equipamentos",
             20,
             30
         );
@@ -245,38 +214,196 @@ public class TelaMapa implements Screen {
         batch.end();
     }
 
+    private void processarMovimento() {
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.I)) {
+
+            jogo.setScreen(
+
+                new TelaInventario(
+                    jogo,
+                    contexto,
+                    this
+                )
+
+            );
+
+            return;
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.G)) {
+
+            jogo.setScreen(
+
+                new TelaGrupo(
+                    jogo,
+                    contexto,
+                    this
+                )
+
+            );
+
+            return;
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+
+            jogo.setScreen(
+
+                new TelaEquipamentos(
+                    jogo,
+                    contexto,
+                    this
+                )
+
+            );
+
+            return;
+        }
+
+        boolean moveu = false;
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+
+            contexto.linhaJogador++;
+
+            moveu = true;
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+
+            contexto.linhaJogador--;
+
+            moveu = true;
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+
+            contexto.colunaJogador--;
+
+            moveu = true;
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
+
+            contexto.colunaJogador++;
+
+            moveu = true;
+        }
+
+        contexto.linhaJogador = Math.max(
+            0,
+            Math.min(
+                MAP_HEIGHT - 1,
+                contexto.linhaJogador
+            )
+        );
+
+        contexto.colunaJogador = Math.max(
+            0,
+            Math.min(
+                MAP_WIDTH - 1,
+                contexto.colunaJogador
+            )
+        );
+
+        if (moveu) {
+
+            verificarEncontroAleatorio();
+        }
+    }
+
+    private void verificarEncontroAleatorio() {
+
+        float chance = (float) Math.random();
+
+        if (chance < 0.10f) {
+
+            contexto.inimigos.clear();
+
+            Inimigo inimigo =
+
+                spawner.gerarInimigo(
+
+                    contexto.inimigosDerrotados
+
+                );
+
+            contexto.inimigos.add(
+
+                inimigo
+
+            );
+
+            jogo.setScreen(
+
+                new TelaBatalha(
+
+                    jogo,
+
+                    contexto,
+
+                    this,
+
+                    false
+
+                )
+
+            );
+        }
+    }
+
     @Override
     public void resize(
+
         int width,
+
         int height
+
     ) {
+
     }
 
     @Override
     public void pause() {
+
     }
 
     @Override
     public void resume() {
+
     }
 
     @Override
     public void hide() {
+
     }
 
     @Override
     public void dispose() {
 
         if (batch != null) {
+
             batch.dispose();
+
         }
 
         if (font != null) {
+
             font.dispose();
+
         }
 
         if (renderer != null) {
+
             renderer.dispose();
+
+        }
+
+        if (mapa != null) {
+
+            mapa.dispose();
+
         }
     }
 }

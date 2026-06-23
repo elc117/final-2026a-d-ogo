@@ -19,6 +19,7 @@ public class GameContext {
     public int linhaJogador;
     public int colunaJogador;
     public int inimigosDerrotados = 0;
+    public List<Item> inventarioGlobal = new ArrayList<>();
 
     public GameContext() {
 

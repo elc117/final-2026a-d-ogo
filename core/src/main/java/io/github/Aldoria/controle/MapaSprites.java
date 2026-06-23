@@ -3,22 +3,6 @@ package io.github.Aldoria.controle;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 
-/**
- * Centraliza o carregamento e o mapeamento de sprites do jogo via
- * {@link AssetManager}.
- *
- * <p>Mapeia o nome do herói/inimigo (String) para o caminho do PNG
- * dentro da pasta assets/, e mapeia o nome do inimigo para o fundo
- * de cenário correspondente.</p>
- *
- * <p>Uso típico:</p>
- * <pre>
- *   MapaSprites sprites = new MapaSprites();
- *   sprites.carregarTudo();
- *   sprites.finalizarCarregamento(); // bloqueia até terminar (uso simples)
- *   Texture tex = sprites.getTexturaHeroi("Guerreiro");
- * </pre>
- */
 public class MapaSprites {
 
     private final AssetManager gerenciador = new AssetManager();
@@ -41,11 +25,7 @@ public class MapaSprites {
     private static final String FUNDO_CEMITERIO          = "cemiterio.png";
     private static final String FUNDO_CAVERNA_DRAGAO     = "caverna_dragao.png";
 
-    /**
-     * Enfileira todos os PNGs usados na tela de batalha para carregamento.
-     * Chame {@link #finalizarCarregamento()} depois para garantir que tudo
-     * esteja pronto antes de desenhar.
-     */
+
     public void carregarTudo() {
         // Heróis
         gerenciador.load(CAMINHO_GUERREIRO, Texture.class);
@@ -66,21 +46,12 @@ public class MapaSprites {
         gerenciador.load(FUNDO_CAVERNA_DRAGAO, Texture.class);
     }
 
-    /**
-     * Bloqueia a thread até todos os assets enfileirados terminarem de
-     * carregar. Simples e adequado para um jogo pequeno como este;
-     * em projetos maiores prefira {@link #atualizar()} a cada frame
-     * com uma tela de loading.
-     */
+
     public void finalizarCarregamento() {
         gerenciador.finishLoading();
     }
 
-    /**
-     * Atualiza o carregamento assíncrono. Retorna true quando tudo
-     * terminou de carregar. Use em uma tela de loading se quiser
-     * evitar o bloqueio de {@link #finalizarCarregamento()}.
-     */
+
     public boolean atualizar() {
         return gerenciador.update();
     }
@@ -89,12 +60,7 @@ public class MapaSprites {
         return gerenciador.isFinished();
     }
 
-    // ── Acesso a texturas de heróis ──────────────────────────────────────────
 
-    /**
-     * Retorna a textura do herói pelo nome ("Guerreiro", "Mago",
-     * "Ladino" ou "Clerigo" — case-insensitive).
-     */
     public Texture getTexturaHeroi(String nomeHeroi) {
         String chave;
         switch (nomeHeroi.toLowerCase()) {
@@ -117,13 +83,7 @@ public class MapaSprites {
         return gerenciador.get(chave, Texture.class);
     }
 
-    // ── Acesso a texturas de inimigos ─────────────────────────────────────────
 
-    /**
-     * Retorna a textura do inimigo pelo nome ("Slime", "Lobo",
-     * "Esqueleto" ou "Dragao Ancestral" — case-insensitive,
-     * usa contains() para tolerar variações como "Dragao Ancestral").
-     */
     public Texture getTexturaInimigo(String nomeInimigo) {
         String nomeLower = nomeInimigo.toLowerCase();
         String chave;
@@ -141,10 +101,7 @@ public class MapaSprites {
         return gerenciador.get(chave, Texture.class);
     }
 
-    /**
-     * Retorna a textura do fundo de cenário correspondente ao
-     * inimigo enfrentado.
-     */
+
     public Texture getTexturaFundo(String nomeInimigo) {
         String nomeLower = nomeInimigo.toLowerCase();
         String chave;

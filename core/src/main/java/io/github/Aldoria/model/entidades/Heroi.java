@@ -1,6 +1,9 @@
 package io.github.Aldoria.model.entidades;
 
+import io.github.Aldoria.model.itens.Item;
 import io.github.Aldoria.model.itens.ItemArma;
+import io.github.Aldoria.model.itens.ItemArmadura;
+import io.github.Aldoria.model.itens.ItemAcessorio;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +25,14 @@ public class Heroi {
     private int cargasMagia = 3;
     private int cargasDivinas = 3;
 
-    private ItemArma armaEquipada;
-
     private List<String> skills;
+
+    private List<Item> inventario = new ArrayList<>();
+
+    private ItemArma armaEquipada;
+    private ItemArmadura armaduraEquipada;
+    private ItemAcessorio acessorioEquipado;
+
 
     public Heroi(String nome) {
 
@@ -203,10 +211,6 @@ public class Heroi {
         return armaEquipada;
     }
 
-    public void equipar(ItemArma arma) {
-        this.armaEquipada = arma;
-    }
-
     public List<String> getSkills() {
         return skills;
     }
@@ -247,5 +251,97 @@ public class Heroi {
 
     public void recuperarCargaDivina() {
         cargasDivinas++;
+    }
+
+    public List<Item> getInventario() {
+
+        return inventario;
+    }
+
+    public void adicionarItem(Item item) {
+
+        inventario.add(item);
+    }
+
+    public void removerItem(Item item) {
+
+        inventario.remove(item);
+    }
+
+    public void equiparArma(ItemArma arma) {
+
+        armaEquipada = arma;
+    }
+
+    public ItemArmadura getArmaduraEquipada() {
+
+        return armaduraEquipada;
+    }
+
+    public void equiparArmadura(ItemArmadura armadura) {
+
+        armaduraEquipada = armadura;
+    }
+
+    public ItemAcessorio getAcessorioEquipado() {
+
+        return acessorioEquipado;
+    }
+
+    public void equiparAcessorio(ItemAcessorio acessorio) {
+
+        acessorioEquipado = acessorio;
+    }
+
+    public void aumentarAtaque(int valor) {
+        ataque += valor;
+    }
+
+    public void aumentarDefesa(int valor) {
+        defesa += valor;
+    }
+
+    public void aumentarHpMaximo(int valor) {
+        hpMaximo += valor;
+        hpAtual += valor;
+    }
+
+    public void aumentarMpMaximo(int valor) {
+        mpMaximo += valor;
+        mpAtual += valor;
+    }
+
+    public void aumentarVelocidade(int valor) {
+        velocidade += valor;
+    }
+
+    public void diminuirAtaque(int valor) {
+        ataque -= valor;
+    }
+
+    public void diminuirDefesa(int valor) {
+        defesa -= valor;
+    }
+
+    public void diminuirHpMaximo(int valor) {
+
+        hpMaximo -= valor;
+
+        if (hpAtual > hpMaximo) {
+            hpAtual = hpMaximo;
+        }
+    }
+
+    public void diminuirMpMaximo(int valor) {
+
+        mpMaximo -= valor;
+
+        if (mpAtual > mpMaximo) {
+            mpAtual = mpMaximo;
+        }
+    }
+
+    public void diminuirVelocidade(int valor) {
+        velocidade -= valor;
     }
 }

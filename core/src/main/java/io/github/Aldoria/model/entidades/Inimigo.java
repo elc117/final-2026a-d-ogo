@@ -35,9 +35,7 @@ public class Inimigo {
     }
 
     public void receberDano(int dano) {
-
         hpAtual -= dano;
-
         if (hpAtual < 0) {
             hpAtual = 0;
         }
@@ -48,16 +46,14 @@ public class Inimigo {
     }
 
     public static Inimigo gerarGoblin() {
-
         return new Inimigo(
-            "Goblin",
+            "Slime",
             50 + (int)(Math.random() * 200),
             10 + (int)(Math.random() * 15)
         );
     }
 
     public static Inimigo gerarLobo() {
-
         return new Inimigo(
             "Lobo",
             80 + (int)(Math.random() * 250),
@@ -66,7 +62,6 @@ public class Inimigo {
     }
 
     public static Inimigo gerarEsqueleto() {
-
         return new Inimigo(
             "Esqueleto",
             100 + (int)(Math.random() * 300),
@@ -75,7 +70,6 @@ public class Inimigo {
     }
 
     public static Inimigo gerarDragao() {
-
         return new Inimigo(
             "Dragao Ancestral",
             800 + (int)(Math.random() * 1000),
