@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -15,6 +16,7 @@ import io.github.Aldoria.model.entidades.Heroi;
 import io.github.Aldoria.model.itens.ItemConsumivel;
 
 import io.github.Aldoria.controle.ControleSpawnerInimigo;
+import io.github.Aldoria.controle.MapaSprites;
 import io.github.Aldoria.model.entidades.Inimigo;
 
 import java.util.Random;
@@ -30,6 +32,11 @@ public class TelaBatalha implements Screen {
     private SpriteBatch batch;
     private ShapeRenderer renderer;
     private BitmapFont font;
+
+    // ── Sprites ──────────────────────────────────────────────────────────────
+    private MapaSprites sprites;
+    private Texture texturaFundo;
+    private Texture texturaInimigoAtual;
 
     private int opcaoSelecionada = 0;
     private int heroiSelecionado = 0;
@@ -80,6 +87,11 @@ public class TelaBatalha implements Screen {
 
         font.getData().setScale(1.4f);
 
+        // ── Carregamento dos sprites ──────────────────────────────────────────
+        sprites = new MapaSprites();
+        sprites.carregarTudo();
+        sprites.finalizarCarregamento(); // carregamento simples e bloqueante
+
         if (!contexto.inimigos.isEmpty()) {
 
             Inimigo inimigo =
@@ -100,6 +112,10 @@ public class TelaBatalha implements Screen {
             mensagem =
                 "Um " + nomeInimigo + " apareceu!";
         }
+
+        // Define o fundo e o sprite do inimigo de acordo com o nome
+        texturaFundo = sprites.getTexturaFundo(nomeInimigo);
+        texturaInimigoAtual = sprites.getTexturaInimigo(nomeInimigo);
     }
 
     @Override
@@ -482,72 +498,125 @@ public class TelaBatalha implements Screen {
 
     private void desenharFundo() {
 
-        renderer.begin(
-            ShapeRenderer.ShapeType.Filled
-        );
+        // Desenha a imagem de fundo do cenário (caverna, floresta,
+        // cemitério ou caverna do dragão) de acordo com o inimigo atual.
+        if (texturaFundo != null) {
 
-        renderer.setColor(
-            0.15f,
-            0.15f,
-            0.25f,
-            1f
-        );
+            batch.begin();
 
-        renderer.rect(
-            0,
-            0,
-            Gdx.graphics.getWidth(),
-            Gdx.graphics.getHeight()
-        );
+            batch.draw(
+                texturaFundo,
+                0,
+                0,
+                Gdx.graphics.getWidth(),
+                Gdx.graphics.getHeight()
+            );
 
-        renderer.end();
+            batch.end();
+
+        } else {
+
+            // Fallback: cor sólida caso a textura não tenha sido carregada
+            renderer.begin(
+                ShapeRenderer.ShapeType.Filled
+            );
+
+            renderer.setColor(
+                0.15f,
+                0.15f,
+                0.25f,
+                1f
+            );
+
+            renderer.rect(
+                0,
+                0,
+                Gdx.graphics.getWidth(),
+                Gdx.graphics.getHeight()
+            );
+
+            renderer.end();
+        }
     }
 
     private void desenharHerois() {
 
-        renderer.begin(
-            ShapeRenderer.ShapeType.Filled
-        );
-
         int quantidade =
             contexto.grupo.size();
+
+        // ── Sprites dos heróis ────────────────────────────────────────────────
+        batch.begin();
+
+        float tamanhoSprite = 96f;
 
         for (int i = 0; i < quantidade; i++) {
 
             Heroi heroi =
                 contexto.grupo.get(i);
 
+            Texture texturaHeroi =
+                sprites.getTexturaHeroi(heroi.getNome());
+
+            float x = 120 + (i * 120) - (tamanhoSprite / 2f);
+            float y = 220 - (tamanhoSprite / 2f);
+
             if (!heroi.estaVivo()) {
+                batch.setColor(1f, 1f, 1f, 0.35f); // esmaece heróis mortos
+            } else {
+                batch.setColor(Color.WHITE);
+            }
 
-                renderer.setColor(
-                    Color.RED
-                );
+            batch.draw(
+                texturaHeroi,
+                x,
+                y,
+                tamanhoSprite,
+                tamanhoSprite
+            );
+        }
 
-            } else if (escolhendoAlvoCura && i == alvoSelecionado) {
+        batch.setColor(Color.WHITE);
+        batch.end();
+
+        // ── Indicadores de seleção e barras de HP/MP ───────────────────────────
+        renderer.begin(
+            ShapeRenderer.ShapeType.Filled
+        );
+
+        for (int i = 0; i < quantidade; i++) {
+
+            Heroi heroi =
+                contexto.grupo.get(i);
+
+            float x = 120 + (i * 120);
+
+            // Indicador de seleção (substitui o círculo antigo do herói)
+            if (escolhendoAlvoCura && i == alvoSelecionado) {
 
                 renderer.setColor(
                     Color.CYAN
                 );
 
+                renderer.rect(
+                    x - 50,
+                    160,
+                    100,
+                    6
+                );
+
             } else if (i == heroiSelecionado) {
+
                 renderer.setColor(
                     Color.GOLD
                 );
 
-            } else {
-
-                renderer.setColor(
-                    Color.YELLOW
+                renderer.rect(
+                    x - 50,
+                    160,
+                    100,
+                    6
                 );
             }
-
-            float x = 120 + (i * 120);
-
-            renderer.circle(
-                x,
-                220,
-                30
-            );
 
             renderer.setColor(
                 Color.DARK_GRAY
@@ -674,19 +743,40 @@ public class TelaBatalha implements Screen {
 
     private void desenharInimigo() {
 
-        renderer.begin(
-            ShapeRenderer.ShapeType.Filled
-        );
+        // Desenha o sprite do inimigo atual (slime, lobo, esqueleto ou dragão)
+        // no lugar do círculo vermelho antigo.
+        if (texturaInimigoAtual != null) {
 
-        renderer.setColor(Color.RED);
+            float tamanhoSprite = 160f;
 
-        renderer.circle(
-            850,
-            320,
-            45
-        );
+            batch.begin();
 
-        renderer.end();
+            batch.draw(
+                texturaInimigoAtual,
+                850 - (tamanhoSprite / 2f),
+                320 - (tamanhoSprite / 2f),
+                tamanhoSprite,
+                tamanhoSprite
+            );
+
+            batch.end();
+
+        } else {
+
+            renderer.begin(
+                ShapeRenderer.ShapeType.Filled
+            );
+
+            renderer.setColor(Color.RED);
+
+            renderer.circle(
+                850,
+                320,
+                45
+            );
+
+            renderer.end();
+        }
     }
 
     private void desenharPainel() {
@@ -919,6 +1009,10 @@ public class TelaBatalha implements Screen {
 
         if (font != null) {
             font.dispose();
+        }
+
+        if (sprites != null) {
+            sprites.dispose();
         }
     }
 
