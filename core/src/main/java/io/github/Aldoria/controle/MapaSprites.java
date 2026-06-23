@@ -19,7 +19,7 @@ import com.badlogic.gdx.graphics.Texture;
  *   Texture tex = sprites.getTexturaHeroi("Guerreiro");
  * </pre>
  */
-public class MapasSprites {
+public class MapaSprites {
 
     private final AssetManager gerenciador = new AssetManager();
 
