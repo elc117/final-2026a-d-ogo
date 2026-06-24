@@ -1,7 +1,35 @@
+# TRABALHO FINAL PARADIGMAS DE PROGRAMAÇÃO 
+
+### Aluno: Diogo Rocha 
+### Curso: Sistemas de Informação 
+
+# RPG DE REGERENCIAMENTO DE GRUPO 
+
+### Proposta inicial mandada para a professora:
+A ideia geral é ser um RPG de turno no modelo clássico, aonde quero implementar uma batalha contra chefes, o grupo será baseado na gestão do jogador, aonde ele terá personagens pré definidos que pela lore terá um motivo mas o jogador vai ter o papel de gestão do grupo (itens, armas, magias e etc) o combate sera feito por turnos e os inimigos apareceram ao caminhar do personagem (bem no estilo final fantasy, baldurs gate e etc) a ideia também é fazer um chefe final (n sei se a biblioteca tem função de geração aleatória mas se tiver quero gerar inimigos aleatorios), a lore geral do jogo é baseada em uma campanha de rpg q mestres então a ideia é implementar pelo menos 3 mapas, funções de batalha, de uso de itens e gestão do grupo principal
+
+# ─── ⋆★⋆ ───
+#  LINHA DO TEMPO
+### *A Jornada Através de Aldoria*
+───
+
+## OBJETIVO 
+
+- Implementar um sistema de batalha por turnos;
+- Criar um sistema de gerenciamento de grupo;
+- Desenvolver um inventário funcional;
+- Implementar geração aleatória de inimigos;
+- Criar um sistema de equipamentos e itens;
+- Modularizar o código utilizando boas práticas de programação.
+
 ## INICIAL 
 -> comecei gerando as classes iniciais de entidade, tudo isso dentro dos models do projeto 
 
 -> na classe *HEROI* e na classe *PERSONAGEM* eu defini a base de codigo e clean code que segui no projeto 
+
+-> depois fiz alogica de controles aonde separei as classes responsaveis por fazer ações de controle no jogo em si 
+
+
 
 ### LOGICAS DE MUNDO 
 
@@ -19,12 +47,24 @@ pelo mapa final
 # PROCESSO DE DESENVOLVIMENTO 
 
 comecei pela logica geral aonde defini como ia funcionar os personagens, depois o mapa e as telas,
-as telas sao geradas em dois momentos
+as telas sao geradas em dois momentos, levando em conta o processo de desenvolvimento o jogo acabou saindo de uma versão basica de texto para algo mais visual 
+as maiores dificuldades que infrentei foram na parte de modularização de codigo, acabei caindo muitas vezes em classe "coringas"
+que faziam tudo e como esse não era o intuito acabei quebrando a cabeça nesta parte de arquitetura de codigo 
+
+o processo começou com a ideia de literalmente desenhar no papel como funcionaria o jogo, depois partiu pra tentar fazer funcionar a ideia no codigo 
+
 
 # DIFICULDADES
--> uma coisa que me fez quase perder o cabelo pensando foi que ospersonagesso faziam uma luta e depois nao entravam na tela, achei que era bug vizual e fui tentar resolver 
+-> uma coisa que me fez quase perder o cabelo pensando foi que os personagesso faziam uma luta e depois nao entravam na tela, achei que era bug vizual e fui tentar resolver 
 no final descobri q os personagens estavam mortos 
-poe isso agora existe a barra visual de vida 
+por isso agora existe a barra visual de vida 
+
+outradificuldade foi achar sprits que combinassem com a ideia, os que tinha de outros projetos destoavam com a ideia que tinha da 
+aparencia do jogo, queria algo que lembrasse jogos antigos 
+
+## Recurso de POO:
+usei recursos principalmente de herança, aonde me senti mais confortavel acessando funções de outros codigos, 
+por motivo de usar muito em python acabei me senindo muito confortavel em utilizar herança e variaveis genericas 
 ## TELA MAPA 
 ![tela_mapa](./core/img/grid.png)
 
@@ -63,8 +103,18 @@ ainda existe outros inimigos mas morri antes de chegar neles, pelo visto não so
 ### Mapa
 ![mapa](./core/img/mapa_img.png)
 
+# DIAGRAMA DE CLASSES 
+
+![dagrama](./core/img/diagrama%20jogo.drawio.png)
+
+credito a ferramenta usada: https://www.drawio.com/
 
 
+# COMO RODAR 
 
+```Bash
+    ./gradlew clean      
 
-
+    ./gradlew :lwjgl3:run
+```
+usa a como dependencia a libGdx 
