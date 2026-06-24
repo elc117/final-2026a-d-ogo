@@ -68,14 +68,14 @@ por motivo de usar muito em python acabei me senindo muito confortavel em utiliz
 ## TELA MAPA 
 ![tela_mapa](./core/img/grid.png)
 
-aonde o personagem (circulo amarelo)  ira andar pelo senario ate aleatoriamente achar um enimigo 
+aonde o personagem (circulo amarelo)  ira andar pelo cenario ate aleatoriamente achar um inimigo 
 
 
 ## TELA BATALHA 
 
 ![tela batalha](./core/img/tela_batalha_inimigo.png)
 
-tela de batalha oande pode ser escolhido qual persnage atacar e qual tipo de golpe ou skill usar, tambem serve como gerenciamento de itens 
+tela de batalha é aonde pode ser escolhido qual personagem atacar e qual tipo de golpe ou skill usar, tambem serve como gerenciamento de itens 
 
 tambem pode se ver nesta tela que o inimigo ataca os personagens podendo matar eles 
 
@@ -86,7 +86,7 @@ o personagem vermelho esta morto
 
 como atualização do projeto caminhando para a parte final de ajustes de imagem foi arrumado as separações de telas e sprit 
 aonde a tela batalha acabou ficando bem hard-code, sinto que poderia ter melhorado a modularização, tentarei fazer isso durante estes dias finais
-tambem adicionei imagens e sprits ao jogo, itoisso ODEIO QUEM DEIXA PNG FALSO NA INTERNET
+tambem adicionei imagens e sprits ao jogo, dito isso ODEIO QUEM DEIXA PNG FALSO NA INTERNET
 
 ![image pngfalso](./core/img/pngfalso.png)
 
@@ -98,7 +98,7 @@ levando em conta que tenho zero habilidades artisticas, os backgrounds foram peg
 ### Batalha
 ![fundo](./core/img/batalha.png)
 
-ainda existe outros inimigos mas morri antes de chegar neles, pelo visto não sou bom joando meu proprio jogo
+ainda existe outros inimigos mas morri antes de chegar neles, pelo visto não sou bom jogando meu proprio jogo
 
 ### Mapa
 ![mapa](./core/img/mapa_img.png)
@@ -110,6 +110,12 @@ ainda existe outros inimigos mas morri antes de chegar neles, pelo visto não so
 credito a ferramenta usada: https://www.drawio.com/
 
 
+vendo com base no diagrama de classe notei que o projeto ficou mais grande do que imaginei que ficaria, inicialmente 
+achei que seria algo mais simples de fazer, como comecei pelo heroi foi a classe com mais atributos e funcionalidades, não imaginei 
+que ela ficaria tão grande, sinto que eu poderia ter modularizado ela melhor mas devido ao tempo diario que deixei para o projeto 
+isso acabou sendo inviavel
+
+
 # COMO RODAR 
 
 ```Bash
@@ -118,3 +124,19 @@ credito a ferramenta usada: https://www.drawio.com/
     ./gradlew :lwjgl3:run
 ```
 usa a como dependencia a libGdx 
+
+## JOGO RODANDO 
+
+![video](./core/img/videojogo.gif)
+
+
+
+### PROMPTS
+
+-> gere imagens png de um lobo, slime, esqueleto e dragão 
+-> gere imagens png de um mago, de um ladino, de um guerreiro  e de um clerigo 
+-> gere um mapa estilo oriental 
+
+a maioria dos prompts foram para gerar imagens por que não consegui achar do jeito que queria 
+
+me desafiei a fazer ele sem muito ajuda de IA pra poder me desafiar na liguagem, talve por isso nao tenha chegado a um resultado aceitavel 
